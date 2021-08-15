@@ -17,7 +17,7 @@ public class MainView extends VBox {
     private Canvas canvas;
     private Simulation simulation;
     private Affine affine;
-    private int drawMode=1;
+    private int drawMode=Simulation.ALIVE;
     public MainView() {
 //        this.stepButton=new Button("step");
 //        this.stepButton.setOnAction(actionEvent->{
@@ -29,18 +29,10 @@ public class MainView extends VBox {
         this.canvas.setOnMouseDragged(this::hadleDraw);
         this.setOnKeyPressed(this::onKeyPressed);
 
-        Toolbar toolbar=new Toolbar();
+        Toolbar toolbar=new Toolbar(this);
         this.getChildren().addAll(toolbar,this.canvas);
 
         this.simulation=new Simulation(10,10);
-        this.simulation.setAlive(2,3);
-        this.simulation.setAlive(2,4);
-        this.simulation.setAlive(2,5);
-
-        this.simulation.setAlive(5,7);
-        this.simulation.setAlive(5,6);
-        this.simulation.setAlive(6,8);
-        this.simulation.setAlive(6,5);
 
         affine=new Affine();
         affine.appendScale(400/10f,400/10f);
@@ -48,10 +40,10 @@ public class MainView extends VBox {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         if(keyEvent.getCode()== KeyCode.D){
-            drawMode=1;
+            this.drawMode=Simulation.ALIVE;
             System.out.println("Draw Mode:");
         }else if(keyEvent.getCode()== KeyCode.E){
-            drawMode=0;
+            this.drawMode=Simulation.DEAD;
             System.out.println("Erase Mode:");
         }
 
@@ -82,7 +74,7 @@ public class MainView extends VBox {
         g.setFill(Color.BLACK);
         for(int x=0;x<this.simulation.width;x++){
             for (int y=0;y<this.simulation.height;y++){
-                if(this.simulation.getState(x,y)==1){
+                if(this.simulation.getState(x,y)==Simulation.ALIVE){
                     g.fillRect(x,y,1,1);
                 }
             }
@@ -96,5 +88,12 @@ public class MainView extends VBox {
             g.strokeLine(0,y,10,y);
         }
 
+    }
+
+    public Simulation getSimulation() {
+        return this.simulation;
+    }
+    public void setDrawMode(int drawMode) {
+        this.drawMode=drawMode;
     }
 }

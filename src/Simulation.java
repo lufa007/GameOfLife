@@ -1,7 +1,10 @@
 public class Simulation {
+
     int width;
     int height;
     int[][]board;
+    public static int ALIVE=1;
+    public static int DEAD=0;
 
 
     Simulation(int width, int height){
@@ -21,7 +24,7 @@ public class Simulation {
             System.out.print('|');
             for (int x=0;x<this.width;x++){
 
-                if(this.board[x][y]==0){
+                if(this.board[x][y]==DEAD){
                     System.out.print('.');
                 }
                 else {
@@ -43,10 +46,10 @@ public class Simulation {
     }
     public int getState(int x, int y){
         if(y<0 || y>=this.height){
-            return 0;
+            return DEAD;
         }
         if(x<0 || x>=this.width){
-            return 0;
+            return DEAD;
         }
         return this.board[x][y];
     }
@@ -69,14 +72,14 @@ public class Simulation {
         for(int y=0;y<this.height;y++){
             for (int x=0;x<this.width;x++) {
                 int neibors=countNeiborAlive(x,y);
-                if(getState(x,y)==1){
-                    if(neibors<2) newBoard[x][y]=0;
-                    else if(neibors<4) newBoard[x][y]=1;
-                    else newBoard[x][y]=0;
+                if(getState(x,y)==ALIVE){
+                    if(neibors<2) newBoard[x][y]=DEAD;
+                    else if(neibors<4) newBoard[x][y]=ALIVE;
+                    else newBoard[x][y]=DEAD;
                 }
                 else {
-                    if(neibors>2) newBoard[x][y]=1;
-                    else newBoard[x][y]=0;
+                    if(neibors>2) newBoard[x][y]=ALIVE;
+                    else newBoard[x][y]=DEAD;
                 }
             }
         }
@@ -96,4 +99,6 @@ public class Simulation {
 
         //System.out.println(gameOfLife.countNeiborAlive(1,0));
     }
+
+
 }
