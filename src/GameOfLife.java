@@ -3,6 +3,7 @@ public class GameOfLife{
     private int width;//对应列
     private int[][]board;
 
+
     GameOfLife(int height,int width){
         this.height=height;
         this.width=width;
