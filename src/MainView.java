@@ -13,23 +13,24 @@ import javafx.scene.transform.NonInvertibleTransformException;
 
 
 public class MainView extends VBox {
-    private Button stepButton;
+
     private Canvas canvas;
     private Simulation simulation;
     private Affine affine;
     private int drawMode=1;
     public MainView() {
-        this.stepButton=new Button("step");
-        this.stepButton.setOnAction(actionEvent->{
-            simulation.step();
-            draw();
-        });
+//        this.stepButton=new Button("step");
+//        this.stepButton.setOnAction(actionEvent->{
+//            simulation.step();
+//            draw();
+//        });
         this.canvas=new Canvas(400,400);
         this.canvas.setOnMousePressed(this::hadleDraw);
         this.canvas.setOnMouseDragged(this::hadleDraw);
         this.setOnKeyPressed(this::onKeyPressed);
 
-        this.getChildren().addAll(this.stepButton,this.canvas);
+        Toolbar toolbar=new Toolbar();
+        this.getChildren().addAll(toolbar,this.canvas);
 
         this.simulation=new Simulation(10,10);
         this.simulation.setAlive(2,3);
